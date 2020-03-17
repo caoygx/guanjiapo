@@ -27,5 +27,7 @@
     },
     "extra": {
         
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
