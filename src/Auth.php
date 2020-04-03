@@ -3,19 +3,22 @@ namespace guanjiapo;
 class Auth
 {
 
+    private $config=[];
+    function __construct($config)
+    {
+        $this->config = $config;
+    }
+
     function getAuth()
     {
-        $params                = [];
-        $params['CompanyName'] = "testmall";
-        $params['UserId']      = "test";
-        $params["Password"]    = "grasp@101";
-        //$params['TimeStamp'] = "2019-05-05 10:59:26";
-        $params['TimeStamp'] = date('Y-m-d H:i:s', time());
-
-
-        //$config = $this->get_config();
-        $config = (new Config())->getConfig();
+        $config = $this->config;
         date_default_timezone_set('PRC');
+        $params                = [];
+        $params['CompanyName'] = $config['companyName'] ;
+        $params['UserId']      = $config['userName'];
+        $params["Password"]    = $config['userpass'];
+        $params['TimeStamp'] = date('Y-m-d H:i:s');
+
         $eas             = new Aes();
         $iv              = mb_substr(trim($config['app_secret']), 5, 16);//获取偏移量
         $eas->iv         = $iv;
@@ -61,7 +64,9 @@ class Auth
         //$params['TimeStamp'] = "2019-05-05 10:59:26";
         $params['TimeStamp'] = date('Y-m-d H:i:s', time());
         $params['AuthParam'] = $authCode;
-        $config = (new Config())->getConfig();
+
+
+        $config = $this->config;
         date_default_timezone_set('PRC');
         $eas             = new aes();
         $iv              = mb_substr(trim($config['app_secret']), 5, 16);//获取偏移量
